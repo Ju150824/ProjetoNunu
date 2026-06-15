@@ -1,11 +1,30 @@
 {
-    "nome": "Nunu",
-    "humor": 100,
-    "energia": 42,
-    "fome": 70,
-    "apego": 68,
+    "pet": {
+        "nome": "Nunu",
+        "versao": "0.4"
+    },
+    "usuario": {
+        "nome": "Ju",
+        "apelido": "Ju",
+        "interesses": [],
+        "preferencias": []
+    },
+    "estado": {
+        "humor": 56,
+        "energia": 23,
+        "fome": 100,
+        "apego": 100,
+        "curiosidade": 67,
+        "sono": 84
+    },
+    "personalidade": {
+        "carinhoso": 85,
+        "curioso": 75,
+        "brincalhao": 60,
+        "dramatico": 55,
+        "timido": 35
+    },
     "memorias": [
-        "eu me chamo ju",
-        "que estudo sistema de informação"
+        "gosta de vitaminas geladas"
     ]
 }

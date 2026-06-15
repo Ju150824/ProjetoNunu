@@ -1,58 +1,80 @@
-from memoria import carregar_pet, salvar_pet
+from memoria import carregar_dados, salvar_dados
 
 from pet import (
     mostrar_status,
+    adotar,
     cumprimentar,
     dar_carinho,
     alimentar,
     brincar,
     dormir,
-    passar_tempo,
+    conversar,
     lembrar,
-    mostrar_memorias
+    mostrar_memorias,
+    passar_tempo
 )
 
-pet = carregar_pet()
+dados = carregar_dados()
 
-print(f"{pet['nome']} v0.2 iniciado!")
+nome = dados["pet"]["nome"]
+versao = dados["pet"]["versao"]
+
+print(f"{nome} v{versao} iniciado!")
 print("Comandos disponíveis:")
-print("oi | status | carinho | comer | brincar | dormir | lembrar | memorias | sair\n")
-while True:
-    comando = input("Você: ").strip().lower()
+print("adotar SEU_NOME | oi | status | carinho | comer | brincar | dormir")
+print("conversar MENSAGEM | lembrar ALGO | memorias | sair\n")
 
-    if comando == "sair":
-        salvar_pet(pet)
-        print(f"{pet['nome']}: Tá bom... vou sentir sua falta 🥺")
+while True:
+    comando = input("Você: ").strip()
+    comando_minusculo = comando.lower()
+
+    if comando_minusculo == "sair":
+        salvar_dados(dados)
+        print(f"{dados['pet']['nome']}: Tá bom... vou sentir sua falta 🥺")
         print("Dados salvos. Até depois!")
         break
 
-    elif comando == "oi":
-        cumprimentar(pet)
+    elif comando_minusculo.startswith("adotar "):
+        nome_usuario = comando[7:].strip()
+        adotar(dados, nome_usuario)
 
-    elif comando == "status":
-        mostrar_status(pet)
+    elif comando_minusculo == "oi":
+        cumprimentar(dados)
 
-    elif comando == "carinho":
-        dar_carinho(pet)
+    elif comando_minusculo == "status":
+        mostrar_status(dados)
 
-    elif comando == "comer":
-        alimentar(pet)
+    elif comando_minusculo == "carinho":
+        dar_carinho(dados)
 
-    elif comando == "brincar":
-        brincar(pet)
+    elif comando_minusculo == "comer":
+        alimentar(dados)
 
-    elif comando == "dormir":
-        dormir(pet)
+    elif comando_minusculo == "brincar":
+        brincar(dados)
 
-    elif comando.startswith("lembrar "):
-        texto = comando.replace("lembrar ", "", 1)
-        lembrar(pet, texto)
+    elif comando_minusculo == "dormir":
+        dormir(dados)
 
-    elif comando == "memorias":
-        mostrar_memorias(pet)
+    elif comando_minusculo == "conversar":
+        conversar(dados, "")
+
+    elif comando_minusculo.startswith("conversar "):
+        mensagem = comando[10:].strip()
+        conversar(dados, mensagem)
+
+    elif comando_minusculo == "lembrar":
+        lembrar(dados, "")
+
+    elif comando_minusculo.startswith("lembrar "):
+        texto = comando[8:].strip()
+        lembrar(dados, texto)
+
+    elif comando_minusculo == "memorias":
+        mostrar_memorias(dados)
 
     else:
-        print(f"{pet['nome']}: Eu ainda não entendi esse comando, mas estou aprendendo.")
+        print(f"{dados['pet']['nome']}: Eu ainda não conheço esse comando, mas estou aprendendo.")
 
-    passar_tempo(pet)
-    salvar_pet(pet)
+    passar_tempo(dados)
+    salvar_dados(dados)

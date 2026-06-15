@@ -1,41 +1,49 @@
-pet = {
-    "nome": "Nunu",
-    "humor": 70,
-    "energia": 80,
-    "fome": 30
-}
+from memoria import carregar_pet, salvar_pet
+from pet import (
+    mostrar_status,
+    cumprimentar,
+    dar_carinho,
+    alimentar,
+    brincar,
+    dormir,
+    passar_tempo
+)
 
-print("Nunu v0.1 iniciado!")
-print("Digite 'sair' para encerrar.\n")
+pet = carregar_pet()
+
+print(f"{pet['nome']} v0.2 iniciado!")
+print("Comandos disponíveis:")
+print("oi | status | carinho | comer | brincar | dormir | sair\n")
 
 while True:
-    mensagem = input("Você: ").lower()
+    comando = input("Você: ").strip().lower()
 
-    if mensagem == "sair":
-        print(f'{pet["nome"]}: Tá bom... vou sentir sua falta 🥺')
+    if comando == "sair":
+        salvar_pet(pet)
+        print(f"{pet['nome']}: Tá bom... vou sentir sua falta 🥺")
+        print("Dados salvos. Até depois!")
         break
 
-    elif "oi" in mensagem or "olá" in mensagem:
-        print(f'{pet["nome"]}: Oi! Eu estava esperando você voltar.')
+    elif comando == "oi":
+        cumprimentar(pet)
 
-    elif "carinho" in mensagem:
-        pet["humor"] += 10
-        print(f'{pet["nome"]}: Aaaah... gostei do carinho 🥺')
+    elif comando == "status":
+        mostrar_status(pet)
 
-    elif "comer" in mensagem or "comida" in mensagem:
-        pet["fome"] -= 20
-        print(f'{pet["nome"]}: Nhami! Agora estou mais feliz.')
+    elif comando == "carinho":
+        dar_carinho(pet)
 
-    elif "brincar" in mensagem:
-        pet["energia"] -= 15
-        pet["humor"] += 10
-        print(f'{pet["nome"]}: Ebaaa! Eu amo brincar com você!')
+    elif comando == "comer":
+        alimentar(pet)
 
-    elif "dormir" in mensagem:
-        pet["energia"] += 20
-        print(f'{pet["nome"]}: Vou tirar um cochilinho... zzz')
+    elif comando == "brincar":
+        brincar(pet)
+
+    elif comando == "dormir":
+        dormir(pet)
 
     else:
-        print(f'{pet["nome"]}: Não entendi muito bem, mas gosto quando você fala comigo.')
+        print(f"{pet['nome']}: Eu ainda não entendi esse comando, mas estou aprendendo.")
 
-    print(f'Status → Humor: {pet["humor"]} | Energia: {pet["energia"]} | Fome: {pet["fome"]}\n')
+    passar_tempo(pet)
+    salvar_pet(pet)

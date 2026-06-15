@@ -1,4 +1,5 @@
 from memoria import carregar_pet, salvar_pet
+
 from pet import (
     mostrar_status,
     cumprimentar,
@@ -6,15 +7,16 @@ from pet import (
     alimentar,
     brincar,
     dormir,
-    passar_tempo
+    passar_tempo,
+    lembrar,
+    mostrar_memorias
 )
 
 pet = carregar_pet()
 
 print(f"{pet['nome']} v0.2 iniciado!")
 print("Comandos disponíveis:")
-print("oi | status | carinho | comer | brincar | dormir | sair\n")
-
+print("oi | status | carinho | comer | brincar | dormir | lembrar | memorias | sair\n")
 while True:
     comando = input("Você: ").strip().lower()
 
@@ -41,6 +43,13 @@ while True:
 
     elif comando == "dormir":
         dormir(pet)
+
+    elif comando.startswith("lembrar "):
+        texto = comando.replace("lembrar ", "", 1)
+        lembrar(pet, texto)
+
+    elif comando == "memorias":
+        mostrar_memorias(pet)
 
     else:
         print(f"{pet['nome']}: Eu ainda não entendi esse comando, mas estou aprendendo.")

@@ -1,7 +1,11 @@
 {
     "nome": "Nunu",
-    "humor": 85,
-    "energia": 1,
-    "fome": 45,
-    "apego": 70
+    "humor": 100,
+    "energia": 42,
+    "fome": 70,
+    "apego": 68,
+    "memorias": [
+        "eu me chamo ju",
+        "que estudo sistema de informação"
+    ]
 }

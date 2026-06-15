@@ -78,15 +78,21 @@ def brincar(pet):
 
 
 def dormir(pet):
-    respostas = [
-        "Vou tirar um cochilinho... zzz",
-        "Boa noite... mesmo que seja de dia.",
-        "Vou sonhar com fios, códigos e carinho.",
-        "Me acorda depois, tá?"
-    ]
-    print(f"{pet['nome']}: {random.choice(respostas)}")
-    pet["energia"] += 30
-    pet["fome"] += 10
+    if pet["energia"] >= 90:
+        print(f"{pet['nome']}: Eu nem estou com sono agora... quero ficar acordado com você.")
+        pet["humor"] += 3
+    else:
+        respostas = [
+            "Vou tirar um cochilinho... zzz",
+            "Boa noite... mesmo que seja de dia.",
+            "Vou sonhar com fios, códigos e carinho.",
+            "Me acorda depois, tá?"
+        ]
+        print(f"{pet['nome']}: {random.choice(respostas)}")
+        pet["energia"] += 35
+        pet["fome"] += 10
+        pet["humor"] += 5
+
     limitar_status(pet)
 
 
@@ -101,3 +107,24 @@ def passar_tempo(pet):
         pet["humor"] -= 3
 
     limitar_status(pet)
+
+def lembrar(pet, texto):
+    if texto == "":
+        print(f"{pet['nome']}: O que você quer que eu lembre?")
+        return
+
+    pet["memorias"].append(texto)
+    pet["apego"] += 3
+    print(f"{pet['nome']}: Tá guardado aqui comigo: {texto}")
+    limitar_status(pet)
+
+
+def mostrar_memorias(pet):
+    if not pet["memorias"]:
+        print(f"{pet['nome']}: Eu ainda não tenho memórias guardadas.")
+        return
+
+    print("\n--- Memórias do Nunu ---")
+    for indice, memoria in enumerate(pet["memorias"], start=1):
+        print(f"{indice}. {memoria}")
+    print("------------------------\n")

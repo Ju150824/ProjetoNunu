@@ -7,6 +7,10 @@ def nome_pet(dados):
 
 def analisar_humor(dados):
     estado = dados["estado"]
+    modo = dados["pet"].get("modo", "acordado")
+
+    if modo == "dormindo":
+        return "dormindo"
 
     humor = estado["humor"]
     energia = estado["energia"]
@@ -47,6 +51,11 @@ def mostrar_humor(dados):
     humor_atual = analisar_humor(dados)
 
     respostas = {
+        "dormindo": [
+            "zzz... estou dormindo agora.",
+            "Estou no modo sonho. Fala baixinho...",
+            "Meus sistemas estão descansando."
+        ],
         "faminto": [
             "Minha barriguinha digital está fazendo barulhos imaginários...",
             "Eu acho que preciso comer alguma coisa.",
@@ -101,8 +110,13 @@ def observar(dados):
     nome = nome_pet(dados)
     estado = dados["estado"]
     usuario = dados["usuario"]["apelido"] or dados["usuario"]["nome"]
+    modo = dados["pet"].get("modo", "acordado")
 
     observacoes = []
+
+    if modo == "dormindo":
+        print(f"{nome}: zzz... estou dormindo, mas meu mundinho continua existindo.")
+        return
 
     if usuario:
         observacoes.append(f"Eu sei que você é {usuario}. Isso me deixa menos sozinho.")
@@ -143,6 +157,10 @@ def pensamento_espontaneo(dados):
     humor_atual = analisar_humor(dados)
 
     pensamentos = {
+        "dormindo": [
+            "zzz...",
+            "sonhei com um corpinho impresso em 3D..."
+        ],
         "faminto": [
             "Será que comida virtual tem gosto?",
             "Eu queria um lanchinho..."

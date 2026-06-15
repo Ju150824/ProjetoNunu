@@ -32,10 +32,6 @@ def contem_palavra_parecida(texto, opcoes):
     return False
 
 
-def extrair_conteudo(comando_original, gatilho):
-    return comando_original.strip()[len(gatilho):].strip()
-
-
 def interpretar(comando_original):
     comando_original = comando_original.strip()
     comando = normalizar(comando_original)
@@ -43,15 +39,15 @@ def interpretar(comando_original):
     if comando == "":
         return "ajuda", ""
 
-    # Sair
-    if comando in ["sair", "fechar", "tchau", "ate logo", "até logo"]:
+    if comando in ["sair", "fechar", "tchau", "ate logo"]:
         return "sair", ""
 
-    # Ajuda
     if comando in ["ajuda", "help", "comandos", "o que posso fazer"]:
         return "ajuda", ""
 
-    # Adoção / nome do usuário
+    if comando in ["historico", "histórico", "acontecimentos", "eventos"]:
+        return "historico", ""
+
     gatilhos_nome = [
         "adotar ",
         "meu nome e ",
@@ -65,7 +61,6 @@ def interpretar(comando_original):
             nome = comando_original[len(gatilho):].strip()
             return "adotar", nome
 
-    # Memórias
     if comando in ["memorias", "memórias", "lembrancas", "lembranças"]:
         return "memorias", ""
 
@@ -81,11 +76,9 @@ def interpretar(comando_original):
     if comando.startswith("guardar "):
         return "lembrar", comando_original[8:].strip()
 
-    # Status
     if comando in ["status", "estado", "meu status", "status do nunu"]:
         return "status", ""
 
-    # Humor
     perguntas_humor = [
         "humor",
         "como voce esta",
@@ -93,15 +86,12 @@ def interpretar(comando_original):
         "como voce ta",
         "como vc ta",
         "como esta",
-        "como ta",
-        "como você está",
-        "como você tá"
+        "como ta"
     ]
 
     if comando in perguntas_humor:
         return "humor", ""
 
-    # Observar
     frases_observar = [
         "observar",
         "se observa",
@@ -114,20 +104,34 @@ def interpretar(comando_original):
     if comando in frases_observar:
         return "observar", ""
 
-    # Cumprimento
-    cumprimentos = ["oi", "ola", "olá", "eai", "e aí", "bom dia", "boa tarde", "boa noite"]
+    cumprimentos = [
+        "oi",
+        "ola",
+        "eai",
+        "bom dia",
+        "boa tarde",
+        "boa noite"
+    ]
 
     if comando in cumprimentos:
         return "oi", ""
 
-    # Carinho
+    palavras_acordar = [
+        "acordar",
+        "acorda",
+        "despertar",
+        "desperta",
+        "levanta"
+    ]
+
+    if contem_palavra_parecida(comando, palavras_acordar):
+        return "acordar", ""
+
     palavras_carinho = [
         "carinho",
         "carinh",
         "cafune",
-        "cafuné",
         "abraco",
-        "abraço",
         "acariciar",
         "beijinho",
         "colo"
@@ -136,7 +140,6 @@ def interpretar(comando_original):
     if contem_palavra_parecida(comando, palavras_carinho):
         return "carinho", ""
 
-    # Comer
     palavras_comida = [
         "comer",
         "come",
@@ -151,21 +154,18 @@ def interpretar(comando_original):
     if contem_palavra_parecida(comando, palavras_comida):
         return "comer", ""
 
-    # Brincar
     palavras_brincar = [
         "brincar",
         "brinca",
         "jogar",
         "joga",
         "divertir",
-        "diversao",
-        "diversão"
+        "diversao"
     ]
 
     if contem_palavra_parecida(comando, palavras_brincar):
         return "brincar", ""
 
-    # Dormir
     palavras_dormir = [
         "dormir",
         "dorme",
@@ -179,9 +179,7 @@ def interpretar(comando_original):
     if contem_palavra_parecida(comando, palavras_dormir):
         return "dormir", ""
 
-    # Conversa explícita
     if comando.startswith("conversar "):
         return "conversar", comando_original[10:].strip()
 
-    # Perguntas e frases livres viram conversa
     return "conversar", comando_original

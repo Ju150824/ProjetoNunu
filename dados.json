@@ -1,7 +1,8 @@
 {
     "pet": {
         "nome": "Nunu",
-        "versao": "0.6"
+        "versao": "0.7",
+        "modo": "acordado"
     },
     "usuario": {
         "nome": "Juliana",
@@ -10,12 +11,12 @@
         "preferencias": []
     },
     "estado": {
-        "humor": 0,
-        "energia": 13,
-        "fome": 70,
-        "apego": 100,
-        "curiosidade": 79,
-        "sono": 100
+        "humor": 85,
+        "energia": 65,
+        "fome": 55,
+        "apego": 62,
+        "curiosidade": 63,
+        "sono": 40
     },
     "personalidade": {
         "carinhoso": 85,
@@ -24,8 +25,15 @@
         "dramatico": 55,
         "timido": 35
     },
-    "memorias": [
-        "gosta de vitaminas geladas",
-        "eu gosto de tecnologia?"
-    ]
+    "memorias": [],
+    "historico": [
+        {
+            "data": "2026-06-15 15:16:39",
+            "evento": "Nunu foi adotado por Juliana."
+        }
+    ],
+    "sistema": {
+        "ultimo_acesso": "2026-06-15 15:16:58",
+        "total_interacoes": 6
+    }
 }

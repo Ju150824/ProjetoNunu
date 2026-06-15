@@ -8,9 +8,11 @@ from pet import (
     alimentar,
     brincar,
     dormir,
+    acordar,
     conversar,
     lembrar,
     mostrar_memorias,
+    mostrar_historico,
     passar_tempo
 )
 
@@ -21,6 +23,11 @@ from cerebro import (
 )
 
 from intencoes import interpretar
+
+from vida import (
+    aplicar_ausencia,
+    registrar_interacao
+)
 
 
 def mostrar_ajuda():
@@ -39,12 +46,27 @@ def mostrar_ajuda():
     print("vamos brincar")
     print("dormir")
     print("vai descansar")
+    print("acordar")
+    print("acorda, Nunu")
     print("conversar MENSAGEM")
     print("lembrar ALGO")
     print("lembra que ALGO")
     print("memorias")
+    print("historico")
     print("sair")
     print("--------------------------------------------\n")
+
+
+def pode_interagir_dormindo(intencao):
+    return intencao in [
+        "sair",
+        "ajuda",
+        "status",
+        "humor",
+        "observar",
+        "acordar",
+        "historico"
+    ]
 
 
 dados = carregar_dados()
@@ -55,12 +77,24 @@ versao = dados["pet"]["versao"]
 print(f"{nome} v{versao} iniciado!")
 print("Digite 'ajuda' para ver o que o Nunu entende.\n")
 
+aplicar_ausencia(dados)
+
 while True:
     comando = input("Você: ").strip()
 
     intencao, conteudo = interpretar(comando)
 
+    modo_atual = dados["pet"].get("modo", "acordado")
+
+    if modo_atual == "dormindo" and not pode_interagir_dormindo(intencao):
+        print(f"{dados['pet']['nome']}: zzz... estou dormindo agora. Se precisar de mim, tente me acordar.")
+        passar_tempo(dados)
+        registrar_interacao(dados)
+        salvar_dados(dados)
+        continue
+
     if intencao == "sair":
+        registrar_interacao(dados)
         salvar_dados(dados)
         print(f"{dados['pet']['nome']}: Tá bom... vou sentir sua falta 🥺")
         print("Dados salvos. Até depois!")
@@ -96,15 +130,22 @@ while True:
     elif intencao == "dormir":
         dormir(dados)
 
+    elif intencao == "acordar":
+        acordar(dados)
+
     elif intencao == "lembrar":
         lembrar(dados, conteudo)
 
     elif intencao == "memorias":
         mostrar_memorias(dados)
 
+    elif intencao == "historico":
+        mostrar_historico(dados)
+
     elif intencao == "conversar":
         conversar(dados, conteudo)
 
     passar_tempo(dados)
+    registrar_interacao(dados)
     salvar_dados(dados)
     pensamento_espontaneo(dados)

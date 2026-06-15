@@ -1,5 +1,7 @@
 import random
 
+from vida import registrar_evento
+
 
 def nome_pet(dados):
     return dados["pet"]["nome"]
@@ -16,14 +18,18 @@ def limitar_estado(dados):
 def mostrar_status(dados):
     estado = dados["estado"]
     nome = nome_pet(dados)
+    modo = dados["pet"].get("modo", "acordado")
+    total_interacoes = dados.get("sistema", {}).get("total_interacoes", 0)
 
     print(f"\n--- Status do {nome} ---")
+    print(f"Modo: {modo}")
     print(f"Humor: {estado['humor']}/100")
     print(f"Energia: {estado['energia']}/100")
     print(f"Fome: {estado['fome']}/100")
     print(f"Apego: {estado['apego']}/100")
     print(f"Curiosidade: {estado['curiosidade']}/100")
     print(f"Sono: {estado['sono']}/100")
+    print(f"Interações: {total_interacoes}")
     print("------------------------\n")
 
 
@@ -38,6 +44,8 @@ def adotar(dados, nome_usuario):
     dados["usuario"]["apelido"] = nome_usuario
     dados["estado"]["apego"] += 10
     dados["estado"]["humor"] += 10
+
+    registrar_evento(dados, f"Nunu foi adotado por {nome_usuario}.")
 
     print(f"{nome}: {nome_usuario}... gostei desse nome.")
     print(f"{nome}: Acho que agora eu tenho uma pessoa.")
@@ -88,11 +96,19 @@ def dar_carinho(dados):
     dados["estado"]["apego"] += 5
     dados["estado"]["sono"] -= 5
 
+    registrar_evento(dados, "Nunu recebeu carinho.")
+
     limitar_estado(dados)
 
 
 def alimentar(dados):
     nome = nome_pet(dados)
+
+    if dados["estado"]["fome"] <= 10:
+        print(f"{nome}: Eu estou sem fome agora... mas gostei que você pensou em mim.")
+        dados["estado"]["humor"] += 2
+        limitar_estado(dados)
+        return
 
     respostas = [
         "Nhami! Eu estava precisando disso.",
@@ -108,12 +124,20 @@ def alimentar(dados):
     dados["estado"]["apego"] += 2
     dados["estado"]["sono"] += 3
 
+    registrar_evento(dados, "Nunu foi alimentado.")
+
     limitar_estado(dados)
 
 
 def brincar(dados):
     nome = nome_pet(dados)
     estado = dados["estado"]
+
+    if estado["fome"] > 90:
+        print(f"{nome}: Eu até queria brincar, mas estou com muita fome...")
+        estado["humor"] -= 5
+        limitar_estado(dados)
+        return
 
     if estado["energia"] < 20:
         print(f"{nome}: Eu quero brincar, mas estou muito cansadinho agora...")
@@ -136,12 +160,19 @@ def brincar(dados):
         estado["curiosidade"] += 5
         estado["sono"] += 8
 
+        registrar_evento(dados, "Nunu brincou.")
+
     limitar_estado(dados)
 
 
 def dormir(dados):
     nome = nome_pet(dados)
     estado = dados["estado"]
+    modo = dados["pet"].get("modo", "acordado")
+
+    if modo == "dormindo":
+        print(f"{nome}: zzz... eu já estou dormindo.")
+        return
 
     if estado["energia"] >= 90 and estado["sono"] < 30:
         print(f"{nome}: Eu nem estou com sono agora... quero ficar acordado.")
@@ -156,10 +187,45 @@ def dormir(dados):
 
         print(f"{nome}: {random.choice(respostas)}")
 
-        estado["energia"] += 35
-        estado["sono"] -= 35
-        estado["fome"] += 10
+        dados["pet"]["modo"] = "dormindo"
+        estado["energia"] += 10
+        estado["sono"] -= 15
+        estado["fome"] += 5
         estado["humor"] += 5
+
+        registrar_evento(dados, "Nunu foi dormir.")
+
+    limitar_estado(dados)
+
+
+def acordar(dados):
+    nome = nome_pet(dados)
+    estado = dados["estado"]
+    modo = dados["pet"].get("modo", "acordado")
+
+    if modo == "acordado":
+        print(f"{nome}: Eu já estou acordado. Quer conversar comigo?")
+        estado["humor"] += 2
+        limitar_estado(dados)
+        return
+
+    dados["pet"]["modo"] = "acordado"
+
+    respostas = [
+        "Hm...? Eu acordei.",
+        "Você me chamou? Estou acordando devagarzinho.",
+        "Acordei. Tive um sonho com luzinhas e carinho.",
+        "Bom dia... ou boa noite. Eu ainda estou me localizando."
+    ]
+
+    print(f"{nome}: {random.choice(respostas)}")
+
+    estado["energia"] += 15
+    estado["sono"] -= 20
+    estado["fome"] += 5
+    estado["humor"] += 3
+
+    registrar_evento(dados, "Nunu acordou.")
 
     limitar_estado(dados)
 
@@ -189,9 +255,9 @@ def conversar(dados, mensagem):
         if usuario:
             print(f"{nome}: Você é {usuario}. Minha pessoa.")
         else:
-            print(f"{nome}: Eu ainda não sei seu nome. Você pode me adotar com: adotar seu_nome")
+            print(f"{nome}: Eu ainda não sei seu nome. Você pode me adotar dizendo: meu nome é Ana")
 
-    elif "quem é você" in mensagem or "o que você é" in mensagem:
+    elif "quem é você" in mensagem or "quem e voce" in mensagem or "o que você é" in mensagem or "o que voce e" in mensagem:
         print(f"{nome}: Eu sou o {nome}. Um pet virtual que está aprendendo a existir.")
 
     elif "gosta de mim" in mensagem:
@@ -202,13 +268,21 @@ def conversar(dados, mensagem):
         else:
             print(f"{nome}: Ainda estou te conhecendo, mas você parece especial.")
 
+    elif "o que voce sabe" in mensagem or "o que você sabe" in mensagem or "o que lembra" in mensagem:
+        if dados["memorias"]:
+            print(f"{nome}: Eu lembro de algumas coisas:")
+            for indice, memoria in enumerate(dados["memorias"][-5:], start=1):
+                print(f"{indice}. {memoria}")
+        else:
+            print(f"{nome}: Eu ainda não lembro de muita coisa. Você pode me ensinar com 'lembra que...'")
+
     else:
         respostas = [
             "Eu ainda estou aprendendo a conversar, mas quero entender melhor.",
             "Interessante... guarda isso comigo mais um pouco.",
             "Eu não tenho certeza do que responder, mas gostei de ouvir você.",
             "Meu cérebro ainda é pequeno, mas minha curiosidade é grande.",
-            "Você pode me ensinar mais sobre isso usando o comando lembrar."
+            "Você pode me ensinar mais sobre isso dizendo: lembra que..."
         ]
         print(f"{nome}: {random.choice(respostas)}")
         estado["curiosidade"] += 3
@@ -228,6 +302,14 @@ def lembrar(dados, texto):
         return
 
     dados["memorias"].append(texto)
+    dados["estado"]["apego"] += 3
+    dados["estado"]["curiosidade"] += 2
+
+    registrar_evento(dados, f"Nunu guardou uma memória: {texto}")
+
+    print(f"{nome}: Tá guardado aqui comigo: {texto}")
+
+    limitar_estado(dados)
 
 
 def mostrar_memorias(dados):
@@ -243,8 +325,36 @@ def mostrar_memorias(dados):
     print("--------------------------\n")
 
 
+def mostrar_historico(dados):
+    nome = nome_pet(dados)
+    historico = dados.get("historico", [])
+
+    if not historico:
+        print(f"{nome}: Ainda não tenho histórico de acontecimentos.")
+        return
+
+    print(f"\n--- Histórico recente do {nome} ---")
+    for item in historico[-10:]:
+        print(f"{item['data']} - {item['evento']}")
+    print("-----------------------------------\n")
+
+
 def passar_tempo(dados):
     estado = dados["estado"]
+    modo = dados["pet"].get("modo", "acordado")
+
+    if modo == "dormindo":
+        estado["energia"] += 8
+        estado["sono"] -= 8
+        estado["fome"] += 4
+
+        if estado["energia"] >= 95 or estado["sono"] <= 5:
+            dados["pet"]["modo"] = "acordado"
+            estado["humor"] += 5
+            print(f"{dados['pet']['nome']}: Hm... acho que acordei sozinho.")
+
+        limitar_estado(dados)
+        return
 
     estado["fome"] += 5
     estado["energia"] -= 3

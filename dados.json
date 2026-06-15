@@ -1,21 +1,21 @@
 {
     "pet": {
         "nome": "Nunu",
-        "versao": "0.4"
+        "versao": "0.6"
     },
     "usuario": {
-        "nome": "Ju",
-        "apelido": "Ju",
+        "nome": "Juliana",
+        "apelido": "Juliana",
         "interesses": [],
         "preferencias": []
     },
     "estado": {
-        "humor": 56,
-        "energia": 23,
-        "fome": 100,
+        "humor": 0,
+        "energia": 13,
+        "fome": 70,
         "apego": 100,
-        "curiosidade": 67,
-        "sono": 84
+        "curiosidade": 79,
+        "sono": 100
     },
     "personalidade": {
         "carinhoso": 85,
@@ -25,6 +25,7 @@
         "timido": 35
     },
     "memorias": [
-        "gosta de vitaminas geladas"
+        "gosta de vitaminas geladas",
+        "eu gosto de tecnologia?"
     ]
 }

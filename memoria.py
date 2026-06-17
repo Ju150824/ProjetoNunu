@@ -8,7 +8,7 @@ def dados_padrao():
     return {
         "pet": {
             "nome": "Nunu",
-            "versao": "0.8",
+            "versao": "1.1",
             "modo": "acordado"
         },
         "usuario": {
@@ -34,6 +34,7 @@ def dados_padrao():
             "carente": 40
         },
         "memorias": [],
+        "lembretes": [],
         "historico": [],
         "sistema": {
             "ultimo_acesso": "",
@@ -60,7 +61,7 @@ def carregar_dados():
             dados = json.load(arquivo)
 
         dados = mesclar_dados(padrao, dados)
-        dados["pet"]["versao"] = "0.8"
+        dados["pet"]["versao"] = "1.1"
 
         return dados
 

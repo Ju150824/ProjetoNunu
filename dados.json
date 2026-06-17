@@ -1,7 +1,7 @@
 {
     "pet": {
         "nome": "Nunu",
-        "versao": "1.0",
+        "versao": "1.1",
         "modo": "acordado"
     },
     "usuario": {
@@ -12,107 +12,116 @@
     },
     "estado": {
         "humor": 100,
-        "energia": 25,
-        "fome": 78,
+        "energia": 55,
+        "fome": 13,
         "apego": 100,
-        "curiosidade": 80,
-        "sono": 6
+        "curiosidade": 83,
+        "sono": 0
     },
     "personalidade": {
         "carinhoso": 100,
         "curioso": 99,
         "brincalhao": 90,
-        "dramatico": 23,
-        "timido": 1,
-        "carente": 70
+        "dramatico": 12,
+        "timido": 0,
+        "carente": 76
     },
     "memorias": [
         "que gosto da Elise, minha filha"
     ],
     "historico": [
         {
-            "data": "2026-06-17 11:04:21",
-            "evento": "Nunu brincou."
+            "data": "2026-06-17 12:20:00",
+            "evento": "Nunu percebeu uma ausência de 22 minuto(s)."
         },
         {
-            "data": "2026-06-17 11:05:53",
-            "evento": "Nunu foi adotado por Juliana."
-        },
-        {
-            "data": "2026-06-17 11:06:29",
-            "evento": "Nunu recebeu carinho."
-        },
-        {
-            "data": "2026-06-17 11:07:05",
-            "evento": "Nunu guardou uma memória: que gosto da Elise, minha filha"
-        },
-        {
-            "data": "2026-06-17 11:17:00",
-            "evento": "Nunu percebeu uma ausência de 9 minuto(s)."
-        },
-        {
-            "data": "2026-06-17 11:17:26",
+            "data": "2026-06-17 12:23:59",
             "evento": "Nunu foi dormir."
         },
         {
-            "data": "2026-06-17 11:17:33",
+            "data": "2026-06-17 12:24:00",
             "evento": "Nunu recebeu carinho."
         },
         {
-            "data": "2026-06-17 11:17:34",
-            "evento": "Nunu recebeu carinho."
-        },
-        {
-            "data": "2026-06-17 11:17:34",
-            "evento": "Nunu recebeu carinho."
-        },
-        {
-            "data": "2026-06-17 11:17:35",
-            "evento": "Nunu recebeu carinho."
-        },
-        {
-            "data": "2026-06-17 11:17:35",
-            "evento": "Nunu recebeu carinho."
-        },
-        {
-            "data": "2026-06-17 11:17:36",
-            "evento": "Nunu recebeu carinho."
-        },
-        {
-            "data": "2026-06-17 11:19:24",
-            "evento": "Nunu recebeu carinho."
-        },
-        {
-            "data": "2026-06-17 11:19:25",
-            "evento": "Nunu recebeu carinho."
-        },
-        {
-            "data": "2026-06-17 11:31:19",
-            "evento": "Nunu percebeu uma ausência de 10 minuto(s)."
-        },
-        {
-            "data": "2026-06-17 11:31:23",
-            "evento": "Nunu recebeu carinho."
-        },
-        {
-            "data": "2026-06-17 11:31:24",
+            "data": "2026-06-17 12:24:01",
             "evento": "Nunu foi alimentado."
         },
         {
-            "data": "2026-06-17 11:31:24",
-            "evento": "Nunu brincou."
+            "data": "2026-06-17 12:25:02",
+            "evento": "Nunu criou um lembrete: beber agua em 17/06/2026 às 12:26."
         },
         {
-            "data": "2026-06-17 11:31:25",
+            "data": "2026-06-17 12:25:26",
+            "evento": "Nunu foi alimentado."
+        },
+        {
+            "data": "2026-06-17 12:25:27",
+            "evento": "Nunu recebeu carinho."
+        },
+        {
+            "data": "2026-06-17 12:25:29",
             "evento": "Nunu foi dormir."
         },
         {
-            "data": "2026-06-17 11:33:20",
+            "data": "2026-06-17 12:25:49",
             "evento": "Nunu recebeu carinho."
+        },
+        {
+            "data": "2026-06-17 12:25:50",
+            "evento": "Nunu recebeu carinho."
+        },
+        {
+            "data": "2026-06-17 12:25:51",
+            "evento": "Nunu recebeu carinho."
+        },
+        {
+            "data": "2026-06-17 12:25:52",
+            "evento": "Nunu recebeu carinho."
+        },
+        {
+            "data": "2026-06-17 12:25:54",
+            "evento": "Nunu foi alimentado."
+        },
+        {
+            "data": "2026-06-17 12:25:56",
+            "evento": "Nunu foi alimentado."
+        },
+        {
+            "data": "2026-06-17 12:25:56",
+            "evento": "Nunu foi alimentado."
+        },
+        {
+            "data": "2026-06-17 12:25:57",
+            "evento": "Nunu foi alimentado."
+        },
+        {
+            "data": "2026-06-17 12:25:58",
+            "evento": "Nunu foi alimentado."
+        },
+        {
+            "data": "2026-06-17 12:25:59",
+            "evento": "Nunu foi alimentado."
+        },
+        {
+            "data": "2026-06-17 12:26:03",
+            "evento": "Nunu foi dormir."
+        },
+        {
+            "data": "2026-06-17 12:26:03",
+            "evento": "Nunu avisou um lembrete: beber agua."
         }
     ],
     "sistema": {
-        "ultimo_acesso": "2026-06-17 11:57:44",
-        "total_interacoes": 164
-    }
+        "ultimo_acesso": "2026-06-17 12:26:05",
+        "total_interacoes": 214
+    },
+    "lembretes": [
+        {
+            "id": 1,
+            "texto": "beber agua",
+            "data_hora": "2026-06-17 12:26:02",
+            "concluido": false,
+            "notificado": true
+        }
+    ]
 }

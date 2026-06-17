@@ -40,6 +40,14 @@ from personalidade import (
     mostrar_perfil
 )
 
+from lembretes import (
+    criar_lembrete,
+    listar_lembretes,
+    verificar_lembretes,
+    concluir_lembrete,
+    remover_lembrete
+)
+
 
 class NunuApp:
     def __init__(self, janela):
@@ -52,22 +60,24 @@ class NunuApp:
         self.app_ativo = True
 
         self.dados = carregar_dados()
-        self.dados["pet"]["versao"] = "1.0"
+        self.dados["pet"]["versao"] = "1.1"
         self.nome = self.dados["pet"]["nome"]
 
         self.configurar_estilos()
         self.criar_interface()
 
-        self.adicionar_sistema(f"{self.nome} v1.0 iniciado.")
+        self.adicionar_sistema(f"{self.nome} v1.1 iniciado.")
         self.adicionar_sistema("Clique no Nunu para fazer carinho ou converse com ele pelo chat.")
 
         self.executar_com_saida(aplicar_ausencia, self.dados)
+        self.executar_com_saida(verificar_lembretes, self.dados)
 
         self.atualizar_tudo()
 
         self.janela.protocol("WM_DELETE_WINDOW", self.fechar_app)
 
         self.agendar_pensamento_espontaneo()
+        self.agendar_verificacao_lembretes()
 
     def configurar_estilos(self):
         self.estilo = ttk.Style()
@@ -267,7 +277,8 @@ class NunuApp:
             ("Humor", "humor"),
             ("Perfil", "perfil"),
             ("Personalidade", "personalidade"),
-            ("Memórias", "memorias")
+            ("Memórias", "memorias"),
+            ("Lembretes", "lembretes")
         ]
 
         for indice, (texto, comando) in enumerate(botoes):
@@ -465,7 +476,8 @@ class NunuApp:
             "historico",
             "personalidade",
             "perfil",
-            "memorias"
+            "memorias",
+            "listar_lembretes"
         ]
 
     def enviar_mensagem(self, event=None):
@@ -543,6 +555,18 @@ class NunuApp:
         elif intencao == "memorias":
             self.executar_com_saida(mostrar_memorias, self.dados)
 
+        elif intencao == "criar_lembrete":
+            self.executar_com_saida(criar_lembrete, self.dados, conteudo)
+
+        elif intencao == "listar_lembretes":
+            self.executar_com_saida(listar_lembretes, self.dados)
+
+        elif intencao == "concluir_lembrete":
+            self.executar_com_saida(concluir_lembrete, self.dados, conteudo)
+
+        elif intencao == "remover_lembrete":
+            self.executar_com_saida(remover_lembrete, self.dados, conteudo)
+
         elif intencao == "historico":
             self.executar_com_saida(mostrar_historico, self.dados)
 
@@ -558,6 +582,12 @@ class NunuApp:
             self.adicionar_nunu(saida_tempo)
 
         registrar_interacao(self.dados)
+
+        saida_lembretes = self.capturar_saida(verificar_lembretes, self.dados)
+
+        if saida_lembretes.strip():
+            self.adicionar_nunu(saida_lembretes)
+
         salvar_dados(self.dados)
 
         self.atualizar_tudo()
@@ -583,6 +613,11 @@ acordar
 conversar hoje foi um dia difícil
 lembra que eu gosto de tecnologia
 memorias
+me lembre de estudar às 19:00
+me lembre de beber água em 10 minutos
+lembretes
+concluir lembrete 1
+apagar lembrete 1
 historico
 sair
 
@@ -646,9 +681,29 @@ Dica: você também pode clicar no rostinho do Nunu para fazer carinho.
 
         self.agendar_pensamento_espontaneo()
 
+    def agendar_verificacao_lembretes(self):
+        if not self.app_ativo:
+            return
+
+        self.janela.after(20000, self.executar_verificacao_lembretes)
+
+    def executar_verificacao_lembretes(self):
+        if not self.app_ativo:
+            return
+
+        saida = self.capturar_saida(verificar_lembretes, self.dados)
+
+        if saida.strip():
+            self.adicionar_nunu(saida)
+            salvar_dados(self.dados)
+            self.atualizar_tudo()
+
+        self.agendar_verificacao_lembretes()
+
     def fechar_app(self):
         self.app_ativo = False
         registrar_interacao(self.dados)
+        verificar_lembretes(self.dados)
         salvar_dados(self.dados)
         self.janela.destroy()
 

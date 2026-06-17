@@ -34,6 +34,14 @@ from personalidade import (
     mostrar_perfil
 )
 
+from lembretes import (
+    criar_lembrete,
+    listar_lembretes,
+    verificar_lembretes,
+    concluir_lembrete,
+    remover_lembrete
+)
+
 
 def mostrar_ajuda():
     print("\n--- Comandos e frases que o Nunu entende ---")
@@ -59,6 +67,11 @@ def mostrar_ajuda():
     print("lembrar ALGO")
     print("lembra que ALGO")
     print("memorias")
+    print("me lembre de estudar às 19:00")
+    print("me lembre de beber água em 10 minutos")
+    print("lembretes")
+    print("concluir lembrete 1")
+    print("apagar lembrete 1")
     print("historico")
     print("sair")
     print("--------------------------------------------\n")
@@ -74,7 +87,9 @@ def pode_interagir_dormindo(intencao):
         "acordar",
         "historico",
         "personalidade",
-        "perfil"
+        "perfil",
+        "memorias",
+        "listar_lembretes"
     ]
 
 
@@ -87,6 +102,7 @@ print(f"{nome} v{versao} iniciado!")
 print("Digite 'ajuda' para ver o que o Nunu entende.\n")
 
 aplicar_ausencia(dados)
+verificar_lembretes(dados)
 
 while True:
     comando = input("Você: ").strip()
@@ -104,6 +120,7 @@ while True:
 
     if intencao == "sair":
         registrar_interacao(dados)
+        verificar_lembretes(dados)
         salvar_dados(dados)
         print(f"{dados['pet']['nome']}: Tá bom... vou sentir sua falta 🥺")
         print("Dados salvos. Até depois!")
@@ -154,6 +171,18 @@ while True:
     elif intencao == "memorias":
         mostrar_memorias(dados)
 
+    elif intencao == "criar_lembrete":
+        criar_lembrete(dados, conteudo)
+
+    elif intencao == "listar_lembretes":
+        listar_lembretes(dados)
+
+    elif intencao == "concluir_lembrete":
+        concluir_lembrete(dados, conteudo)
+
+    elif intencao == "remover_lembrete":
+        remover_lembrete(dados, conteudo)
+
     elif intencao == "historico":
         mostrar_historico(dados)
 
@@ -162,5 +191,6 @@ while True:
 
     passar_tempo(dados)
     registrar_interacao(dados)
+    verificar_lembretes(dados)
     salvar_dados(dados)
     pensamento_espontaneo(dados)

@@ -12,7 +12,7 @@ def normalizar(texto):
         if unicodedata.category(caractere) != "Mn"
     )
 
-    texto_sem_acento = re.sub(r"[^a-z0-9\s]", " ", texto_sem_acento)
+    texto_sem_acento = re.sub(r"[^a-z0-9\s:]", " ", texto_sem_acento)
     texto_sem_acento = re.sub(r"\s+", " ", texto_sem_acento)
 
     return texto_sem_acento.strip()
@@ -57,6 +57,44 @@ def interpretar(comando_original):
 
     if comando in ["perfil", "perfil do nunu", "quem e o nunu"]:
         return "perfil", ""
+
+    if comando in ["lembretes", "meus lembretes", "alarmes", "meus alarmes"]:
+        return "listar_lembretes", ""
+
+    gatilhos_criar_lembrete = [
+        "me lembre de ",
+        "criar lembrete ",
+        "novo lembrete ",
+        "lembrete "
+    ]
+
+    for gatilho in gatilhos_criar_lembrete:
+        if comando.startswith(gatilho):
+            conteudo = comando_original[len(gatilho):].strip()
+            return "criar_lembrete", conteudo
+
+    gatilhos_concluir_lembrete = [
+        "concluir lembrete ",
+        "marcar lembrete ",
+        "finalizar lembrete "
+    ]
+
+    for gatilho in gatilhos_concluir_lembrete:
+        if comando.startswith(gatilho):
+            conteudo = comando_original[len(gatilho):].strip()
+            return "concluir_lembrete", conteudo
+
+    gatilhos_remover_lembrete = [
+        "apagar lembrete ",
+        "remover lembrete ",
+        "deletar lembrete ",
+        "excluir lembrete "
+    ]
+
+    for gatilho in gatilhos_remover_lembrete:
+        if comando.startswith(gatilho):
+            conteudo = comando_original[len(gatilho):].strip()
+            return "remover_lembrete", conteudo
 
     gatilhos_nome = [
         "adotar ",

@@ -158,11 +158,11 @@ def brincar(dados):
 
         print(f"{nome}: {random.choice(respostas)}")
 
-        estado["energia"] -= 20
-        estado["humor"] += 12
+        estado["energia"] -= 12
+        estado["humor"] += 10
         estado["apego"] += 4
-        estado["curiosidade"] += 5
-        estado["sono"] += 8
+        estado["curiosidade"] += 4
+        estado["sono"] += 4
 
         evoluir_por_evento(dados, "brincar")
         registrar_evento(dados, "Nunu brincou.")
@@ -193,9 +193,9 @@ def dormir(dados):
         print(f"{nome}: {random.choice(respostas)}")
 
         dados["pet"]["modo"] = "dormindo"
-        estado["energia"] += 10
-        estado["sono"] -= 15
-        estado["fome"] += 5
+        estado["energia"] += 15
+        estado["sono"] -= 20
+        estado["fome"] += 2
         estado["humor"] += 5
 
         evoluir_por_evento(dados, "dormir")
@@ -297,29 +297,29 @@ def passar_tempo(dados):
     modo = dados["pet"].get("modo", "acordado")
 
     if modo == "dormindo":
-        estado["energia"] += 8
-        estado["sono"] -= 8
-        estado["fome"] += 4
+        estado["energia"] += 6
+        estado["sono"] -= 6
+        estado["fome"] += 1
 
         if estado["energia"] >= 95 or estado["sono"] <= 5:
             dados["pet"]["modo"] = "acordado"
-            estado["humor"] += 5
+            estado["humor"] += 4
             print(f"{dados['pet']['nome']}: Hm... acho que acordei sozinho.")
 
         limitar_estado(dados)
         return
 
-    estado["fome"] += 5
-    estado["energia"] -= 3
-    estado["sono"] += 4
+    estado["fome"] += 2
+    estado["energia"] -= 1
+    estado["sono"] += 1
 
-    if estado["fome"] > 70:
-        estado["humor"] -= 5
+    if estado["fome"] > 80:
+        estado["humor"] -= 2
 
     if estado["energia"] < 20:
-        estado["humor"] -= 3
+        estado["humor"] -= 2
 
-    if estado["sono"] > 80:
-        estado["humor"] -= 4
+    if estado["sono"] > 85:
+        estado["humor"] -= 2
 
     limitar_estado(dados)

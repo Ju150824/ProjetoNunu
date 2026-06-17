@@ -111,9 +111,9 @@ def aplicar_ausencia(dados):
         print(f"{nome}: Passaram {texto_tempo(minutos)} desde a última vez.")
         return
 
-    estado["fome"] += ciclos * 2
-    estado["sono"] += ciclos
-    estado["energia"] -= ciclos
+    estado["fome"] += ciclos
+    estado["sono"] += ciclos // 2
+    estado["energia"] -= ciclos // 2
 
     if minutos >= 60:
         estado["humor"] -= 4

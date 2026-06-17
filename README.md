@@ -2,11 +2,11 @@
 
 Nunu é um projeto de pet virtual em desenvolvimento.
 
-A ideia é criar um companheiro digital com personalidade própria, emoções simuladas, memória e interações afetivas. Inicialmente, o Nunu funciona pelo terminal, mas o objetivo futuro é evoluir para uma interface gráfica, aplicativo mobile e, posteriormente, um corpo físico com sensores, voz e impressão 3D.
+A ideia é criar um companheiro digital com personalidade própria, emoções simuladas, memória e interações afetivas. Inicialmente, o Nunu começou pelo terminal, mas agora também possui uma primeira interface visual em desktop.
 
 ## Versão atual
 
-Nunu v0.7
+Nunu v0.9
 
 ## Visão do projeto
 
@@ -20,6 +20,8 @@ O Nunu não é apenas um chatbot. Ele está sendo pensado como um pet virtual se
 - comportamento baseado em humor;
 - percepção de passagem de tempo;
 - modo acordado/dormindo;
+- personalidade evolutiva;
+- interface visual;
 - evolução gradual.
 
 No futuro, a ideia é que o Nunu possa funcionar como um companheiro de mesa, com aparência física, sensores de toque, voz, alarmes, conexão com internet e respostas inteligentes.
@@ -41,8 +43,13 @@ No futuro, a ideia é que o Nunu possa funcionar como um companheiro de mesa, co
 - Respostas aleatórias
 - Motor emocional básico
 - Interpretação de intenção
-- Comando para observar o próprio estado
-- Comando para expressar humor atual
+- Diálogo emocional
+- Personalidade evolutiva
+- Primeira interface visual em desktop
+- Botões de interação
+- Campo de conversa
+- Status visual
+- Expressões faciais simples
 - Pensamentos espontâneos ocasionais
 
 ## Estrutura do projeto
@@ -50,18 +57,25 @@ No futuro, a ideia é que o Nunu possa funcionar como um companheiro de mesa, co
 ```txt
 Nunu/
 ├── main.py
+├── app.py
 ├── pet.py
 ├── memoria.py
 ├── cerebro.py
 ├── intencoes.py
 ├── vida.py
+├── personalidade.py
+├── dialogo.py
 ├── dados.json
 └── README.md
 
 Arquivos principais
 main.py
 
-Arquivo principal do projeto. Controla o loop de interação com o usuário e chama as funções dos outros módulos.
+Versão em terminal do Nunu.
+
+app.py
+
+Primeira interface visual do Nunu em desktop. Possui rosto, chat, botões de interação e status na tela.
 
 pet.py
 
@@ -73,7 +87,7 @@ Responsável por carregar, atualizar e salvar os dados do Nunu no arquivo dados.
 
 cerebro.py
 
-Responsável pelo motor emocional do Nunu. Analisa os estados internos e gera respostas baseadas no humor, fome, sono, energia, apego e curiosidade.
+Responsável pelo motor emocional do Nunu. Analisa os estados internos e gera respostas baseadas no humor, fome, sono, energia, apego, curiosidade e personalidade.
 
 intencoes.py
 
@@ -83,17 +97,39 @@ vida.py
 
 Responsável pelo ciclo de vida do Nunu. Calcula o tempo longe do usuário, aplica efeitos de ausência, registra interações e mantém um histórico recente.
 
+personalidade.py
+
+Responsável por controlar os traços de personalidade do Nunu e permitir que ele evolua conforme as interações.
+
+dialogo.py
+
+Responsável por respostas mais emocionais e naturais durante conversas livres.
+
 dados.json
 
 Arquivo onde ficam salvos os dados persistentes do Nunu, incluindo estado emocional, informações do usuário, personalidade, memórias, histórico e sistema.
 
-Comandos disponiveis
+Como executar no terminal
+py main.py
+
+ou:
+
+python main.py
+Como executar com interface visual
+py app.py
+
+ou:
+
+python app.py
+
 adotar SEU_NOME
 meu nome é SEU_NOME
 oi
 status
 como você está?
 observar
+personalidade
+perfil
 carinho
 quero fazer carinho em você
 comer
@@ -111,15 +147,10 @@ memorias
 historico
 sair
 
-Como executar
-No terminal, dentro da pasta do projeto:
-python main.py
-py main.py
-
-
 Objetivo futuro
 
 O objetivo é evoluir o Nunu em fases:
+
 Pet virtual no terminal
 Interface gráfica para desktop
 Aplicativo mobile

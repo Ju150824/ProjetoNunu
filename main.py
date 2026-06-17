@@ -42,6 +42,12 @@ from lembretes import (
     remover_lembrete
 )
 
+from diario import (
+    registrar_diario,
+    listar_diario,
+    resumo_diario
+)
+
 
 def mostrar_ajuda():
     print("\n--- Comandos e frases que o Nunu entende ---")
@@ -54,24 +60,19 @@ def mostrar_ajuda():
     print("personalidade")
     print("perfil")
     print("carinho")
-    print("quero fazer carinho em você")
     print("comer")
-    print("come alguma coisa")
     print("brincar")
-    print("vamos brincar")
     print("dormir")
-    print("vai descansar")
     print("acordar")
-    print("acorda, Nunu")
     print("conversar MENSAGEM")
     print("lembrar ALGO")
-    print("lembra que ALGO")
     print("memorias")
     print("me lembre de estudar às 19:00")
-    print("me lembre de beber água em 10 minutos")
     print("lembretes")
-    print("concluir lembrete 1")
-    print("apagar lembrete 1")
+    print("diario hoje foi um dia difícil")
+    print("hoje foi um dia bom")
+    print("diario")
+    print("resumo emocional")
     print("historico")
     print("sair")
     print("--------------------------------------------\n")
@@ -89,7 +90,9 @@ def pode_interagir_dormindo(intencao):
         "personalidade",
         "perfil",
         "memorias",
-        "listar_lembretes"
+        "listar_lembretes",
+        "listar_diario",
+        "resumo_diario"
     ]
 
 
@@ -182,6 +185,15 @@ while True:
 
     elif intencao == "remover_lembrete":
         remover_lembrete(dados, conteudo)
+
+    elif intencao == "registrar_diario":
+        registrar_diario(dados, conteudo)
+
+    elif intencao == "listar_diario":
+        listar_diario(dados)
+
+    elif intencao == "resumo_diario":
+        resumo_diario(dados)
 
     elif intencao == "historico":
         mostrar_historico(dados)

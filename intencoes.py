@@ -58,6 +58,29 @@ def interpretar(comando_original):
     if comando in ["perfil", "perfil do nunu", "quem e o nunu"]:
         return "perfil", ""
 
+    if comando in ["diario", "diário", "meu diario", "meu diário", "registros emocionais"]:
+        return "listar_diario", ""
+
+    if comando in ["resumo emocional", "resumo do diario", "resumo do diário", "como estou emocionalmente"]:
+        return "resumo_diario", ""
+
+    gatilhos_diario = [
+        "registrar diario ",
+        "registrar diário ",
+        "diario ",
+        "diário ",
+        "hoje eu ",
+        "hoje foi ",
+        "estou me sentindo ",
+        "me sinto "
+    ]
+
+    for gatilho in gatilhos_diario:
+        gatilho_normalizado = normalizar(gatilho)
+
+        if comando.startswith(gatilho_normalizado):
+            return "registrar_diario", comando_original
+
     if comando in ["lembretes", "meus lembretes", "alarmes", "meus alarmes"]:
         return "listar_lembretes", ""
 

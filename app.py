@@ -5,6 +5,12 @@ from contextlib import redirect_stdout
 
 from memoria import carregar_dados, salvar_dados
 
+from diario import (
+    registrar_diario,
+    listar_diario,
+    resumo_diario
+)
+
 from pet import (
     mostrar_status,
     adotar,
@@ -60,13 +66,13 @@ class NunuApp:
         self.app_ativo = True
 
         self.dados = carregar_dados()
-        self.dados["pet"]["versao"] = "1.1"
+        self.dados["pet"]["versao"] = "1.2"
         self.nome = self.dados["pet"]["nome"]
 
         self.configurar_estilos()
         self.criar_interface()
 
-        self.adicionar_sistema(f"{self.nome} v1.1 iniciado.")
+        self.adicionar_sistema(f"{self.nome} v1.2 iniciado.")
         self.adicionar_sistema("Clique no Nunu para fazer carinho ou converse com ele pelo chat.")
 
         self.executar_com_saida(aplicar_ausencia, self.dados)
@@ -278,7 +284,9 @@ class NunuApp:
             ("Perfil", "perfil"),
             ("Personalidade", "personalidade"),
             ("Memórias", "memorias"),
-            ("Lembretes", "lembretes")
+            ("Lembretes", "lembretes"),
+            ("Diário", "diario"),
+            ("Resumo", "resumo emocional")
         ]
 
         for indice, (texto, comando) in enumerate(botoes):
@@ -478,6 +486,8 @@ class NunuApp:
             "perfil",
             "memorias",
             "listar_lembretes"
+            "listar_diario",
+            "resumo_diario"
         ]
 
     def enviar_mensagem(self, event=None):
@@ -567,6 +577,15 @@ class NunuApp:
         elif intencao == "remover_lembrete":
             self.executar_com_saida(remover_lembrete, self.dados, conteudo)
 
+        elif intencao == "registrar_diario":
+            self.executar_com_saida(registrar_diario, self.dados, conteudo)
+
+        elif intencao == "listar_diario":
+            self.executar_com_saida(listar_diario, self.dados)
+
+        elif intencao == "resumo_diario":
+            self.executar_com_saida(resumo_diario, self.dados)
+
         elif intencao == "historico":
             self.executar_com_saida(mostrar_historico, self.dados)
 
@@ -618,6 +637,10 @@ me lembre de beber água em 10 minutos
 lembretes
 concluir lembrete 1
 apagar lembrete 1
+diario hoje foi um dia difícil
+hoje foi um dia bom
+diario
+resumo emocional
 historico
 sair
 

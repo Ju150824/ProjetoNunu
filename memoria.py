@@ -1,14 +1,16 @@
 import json
 import os
+from datetime import datetime
 
 ARQUIVO_DADOS = "dados.json"
+FORMATO_DATA = "%Y-%m-%d %H:%M:%S"
 
 
 def dados_padrao():
     return {
         "pet": {
             "nome": "Nunu",
-            "versao": "1.2",
+            "versao": "1.3",
             "modo": "acordado"
         },
         "usuario": {
@@ -32,6 +34,13 @@ def dados_padrao():
             "dramatico": 55,
             "timido": 35,
             "carente": 40
+        },
+        "evolucao": {
+            "nivel": 1,
+            "xp": 0,
+            "xp_proximo_nivel": 100,
+            "fase": "recém-adotado",
+            "data_nascimento": datetime.now().strftime(FORMATO_DATA)
         },
         "memorias": [],
         "lembretes": [],
@@ -62,13 +71,13 @@ def carregar_dados():
             dados = json.load(arquivo)
 
         dados = mesclar_dados(padrao, dados)
-        dados["pet"]["versao"] = "1.2"
+        dados["pet"]["versao"] = "1.3"
 
         return dados
 
     return padrao
 
-
+ 
 def salvar_dados(dados):
     with open(ARQUIVO_DADOS, "w", encoding="utf-8") as arquivo:
         json.dump(dados, arquivo, indent=4, ensure_ascii=False)

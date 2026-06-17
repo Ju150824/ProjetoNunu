@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk, scrolledtext
 import io
 from contextlib import redirect_stdout
+from evolucao import mostrar_evolucao
 
 from memoria import carregar_dados, salvar_dados
 
@@ -66,13 +67,13 @@ class NunuApp:
         self.app_ativo = True
 
         self.dados = carregar_dados()
-        self.dados["pet"]["versao"] = "1.2"
+        self.dados["pet"]["versao"] = "1.3"
         self.nome = self.dados["pet"]["nome"]
 
         self.configurar_estilos()
         self.criar_interface()
 
-        self.adicionar_sistema(f"{self.nome} v1.2 iniciado.")
+        self.adicionar_sistema(f"{self.nome} v1.3 iniciado.")
         self.adicionar_sistema("Clique no Nunu para fazer carinho ou converse com ele pelo chat.")
 
         self.executar_com_saida(aplicar_ausencia, self.dados)
@@ -281,6 +282,7 @@ class NunuApp:
             ("Acordar", "acordar"),
             ("Observar", "observar"),
             ("Humor", "humor"),
+            ("Evolução", "evolucao"),
             ("Perfil", "perfil"),
             ("Personalidade", "personalidade"),
             ("Memórias", "memorias"),
@@ -482,6 +484,7 @@ class NunuApp:
             "observar",
             "acordar",
             "historico",
+            "evolucao"
             "personalidade",
             "perfil",
             "memorias",
@@ -543,6 +546,9 @@ class NunuApp:
 
         elif intencao == "perfil":
             self.executar_com_saida(mostrar_perfil, self.dados)
+        
+        elif intencao == "evolucao":
+            self.executar_com_saida(mostrar_evolucao, self.dados)
 
         elif intencao == "carinho":
             self.executar_com_saida(dar_carinho, self.dados)

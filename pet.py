@@ -3,6 +3,7 @@ import random
 from vida import registrar_evento
 from personalidade import evoluir_por_evento
 from dialogo import responder_dialogo
+from evolucao import ganhar_xp, mostrar_evolucao
 
 
 def nome_pet(dados):
@@ -22,6 +23,7 @@ def mostrar_status(dados):
     nome = nome_pet(dados)
     modo = dados["pet"].get("modo", "acordado")
     total_interacoes = dados.get("sistema", {}).get("total_interacoes", 0)
+    evolucao = dados.get("evolucao", {})
 
     print(f"\n--- Status do {nome} ---")
     print(f"Modo: {modo}")
@@ -31,6 +33,9 @@ def mostrar_status(dados):
     print(f"Apego: {estado['apego']}/100")
     print(f"Curiosidade: {estado['curiosidade']}/100")
     print(f"Sono: {estado['sono']}/100")
+    print(f"Nível: {evolucao.get('nivel', 1)}")
+    print(f"XP: {evolucao.get('xp', 0)}/{evolucao.get('xp_proximo_nivel', 100)}")
+    print(f"Fase: {evolucao.get('fase', 'recém-adotado')}")
     print(f"Interações: {total_interacoes}")
     print("------------------------\n")
 
@@ -101,6 +106,7 @@ def dar_carinho(dados):
     evoluir_por_evento(dados, "carinho")
     registrar_evento(dados, "Nunu recebeu carinho.")
 
+    ganhar_xp(dados, 8, "carinho")
     limitar_estado(dados)
 
 
@@ -110,6 +116,7 @@ def alimentar(dados):
     if dados["estado"]["fome"] <= 10:
         print(f"{nome}: Eu estou sem fome agora... mas gostei que você pensou em mim.")
         dados["estado"]["humor"] += 2
+        ganhar_xp(dados, 6, "alimentação")
         limitar_estado(dados)
         return
 
@@ -140,6 +147,7 @@ def brincar(dados):
     if estado["fome"] > 90:
         print(f"{nome}: Eu até queria brincar, mas estou com muita fome...")
         estado["humor"] -= 5
+        ganhar_xp(dados, 10, "brincadeira")
         limitar_estado(dados)
         return
 
@@ -201,6 +209,7 @@ def dormir(dados):
         evoluir_por_evento(dados, "dormir")
         registrar_evento(dados, "Nunu foi dormir.")
 
+    ganhar_xp(dados, 5, "descanso")
     limitar_estado(dados)
 
 
@@ -234,11 +243,13 @@ def acordar(dados):
     evoluir_por_evento(dados, "acordar")
     registrar_evento(dados, "Nunu acordou.")
 
+    ganhar_xp(dados, 5, "descanso")
     limitar_estado(dados)
 
 
 def conversar(dados, mensagem):
     responder_dialogo(dados, mensagem)
+    ganhar_xp(dados, 7, "conversa")
     limitar_estado(dados)
 
 
@@ -262,6 +273,7 @@ def lembrar(dados, texto):
 
     print(f"{nome}: Tá guardado aqui comigo: {texto}")
 
+    ganhar_xp(dados, 12, "memória nova")
     limitar_estado(dados)
 
 

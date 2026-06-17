@@ -57,6 +57,9 @@ def interpretar(comando_original):
 
     if comando in ["perfil", "perfil do nunu", "quem e o nunu"]:
         return "perfil", ""
+    
+    if comando in ["evolucao", "evolução", "nivel", "nível", "xp"]:
+        return "evolucao", ""
 
     if comando in ["diario", "diário", "meu diario", "meu diário", "registros emocionais"]:
         return "listar_diario", ""

@@ -1,4 +1,5 @@
 from memoria import carregar_dados, salvar_dados
+from evolucao import mostrar_evolucao
 
 from pet import (
     mostrar_status,
@@ -73,6 +74,9 @@ def mostrar_ajuda():
     print("hoje foi um dia bom")
     print("diario")
     print("resumo emocional")
+    print("evolucao")
+    print("nivel")
+    print("xp")
     print("historico")
     print("sair")
     print("--------------------------------------------\n")
@@ -152,6 +156,9 @@ while True:
 
     elif intencao == "perfil":
         mostrar_perfil(dados)
+
+    elif intencao == "evolucao":
+        mostrar_evolucao(dados)
 
     elif intencao == "carinho":
         dar_carinho(dados)

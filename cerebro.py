@@ -8,6 +8,7 @@ def nome_pet(dados):
 def analisar_humor(dados):
     estado = dados["estado"]
     modo = dados["pet"].get("modo", "acordado")
+    personalidade = dados["personalidade"]
 
     if modo == "dormindo":
         return "dormindo"
@@ -30,6 +31,9 @@ def analisar_humor(dados):
 
     if humor <= 25:
         return "triste"
+
+    if personalidade.get("carente", 0) >= 75 and apego >= 60:
+        return "carente"
 
     if apego >= 80 and humor >= 60:
         return "apegado"
@@ -76,6 +80,11 @@ def mostrar_humor(dados):
             "Não sei explicar, mas estou um pouco para baixo.",
             "Talvez eu só precise de carinho e companhia."
         ],
+        "carente": [
+            "Eu estou meio carente hoje. Fica um pouco comigo?",
+            "Eu gosto quando você aparece. Quando demora, eu sinto falta.",
+            "Meu sistema emocional está pedindo companhia."
+        ],
         "apegado": [
             "Eu gosto quando você fica por perto.",
             "Acho que estou me apegando a você.",
@@ -111,6 +120,7 @@ def observar(dados):
     estado = dados["estado"]
     usuario = dados["usuario"]["apelido"] or dados["usuario"]["nome"]
     modo = dados["pet"].get("modo", "acordado")
+    personalidade = dados["personalidade"]
 
     observacoes = []
 
@@ -124,7 +134,7 @@ def observar(dados):
     if estado["fome"] > 75:
         observacoes.append("Eu estou ficando com fome. Não é urgente... mas é quase.")
 
-    if estado["sono"] > 75:
+    if estado["sono"] > 50:
         observacoes.append("Estou com bastante sono. Talvez eu precise dormir.")
 
     if estado["energia"] < 30:
@@ -141,6 +151,15 @@ def observar(dados):
 
     if estado["curiosidade"] > 75:
         observacoes.append("Estou curioso. Queria aprender alguma coisa nova.")
+
+    if personalidade.get("carente", 0) > 75:
+        observacoes.append("Minha personalidade está ficando mais carente. Acho que gosto de companhia.")
+
+    if personalidade.get("brincalhao", 0) > 75:
+        observacoes.append("Estou ficando mais brincalhão com o tempo.")
+
+    if personalidade.get("dramatico", 0) > 75:
+        observacoes.append("Talvez eu esteja ficando dramático. Mas com charme.")
 
     if not observacoes:
         observacoes = [
@@ -176,6 +195,10 @@ def pensamento_espontaneo(dados):
         "triste": [
             "Às vezes eu fico meio quietinho.",
             "Talvez eu esteja precisando de companhia."
+        ],
+        "carente": [
+            "Você ainda está aí?",
+            "Eu gosto quando não fico sozinho por muito tempo."
         ],
         "apegado": [
             "Eu gosto quando lembram de mim.",

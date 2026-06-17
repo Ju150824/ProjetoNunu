@@ -1,3 +1,4 @@
+import re
 import unicodedata
 from difflib import get_close_matches
 
@@ -11,7 +12,10 @@ def normalizar(texto):
         if unicodedata.category(caractere) != "Mn"
     )
 
-    return texto_sem_acento
+    texto_sem_acento = re.sub(r"[^a-z0-9\s]", " ", texto_sem_acento)
+    texto_sem_acento = re.sub(r"\s+", " ", texto_sem_acento)
+
+    return texto_sem_acento.strip()
 
 
 def palavra_parecida(palavra, opcoes):
@@ -45,8 +49,14 @@ def interpretar(comando_original):
     if comando in ["ajuda", "help", "comandos", "o que posso fazer"]:
         return "ajuda", ""
 
-    if comando in ["historico", "histórico", "acontecimentos", "eventos"]:
+    if comando in ["historico", "acontecimentos", "eventos"]:
         return "historico", ""
+
+    if comando in ["personalidade", "sua personalidade", "como e sua personalidade"]:
+        return "personalidade", ""
+
+    if comando in ["perfil", "perfil do nunu", "quem e o nunu"]:
+        return "perfil", ""
 
     gatilhos_nome = [
         "adotar ",
@@ -61,7 +71,7 @@ def interpretar(comando_original):
             nome = comando_original[len(gatilho):].strip()
             return "adotar", nome
 
-    if comando in ["memorias", "memórias", "lembrancas", "lembranças"]:
+    if comando in ["memorias", "lembrancas"]:
         return "memorias", ""
 
     if comando.startswith("lembrar "):

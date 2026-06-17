@@ -1,6 +1,8 @@
 import random
 
 from vida import registrar_evento
+from personalidade import evoluir_por_evento
+from dialogo import responder_dialogo
 
 
 def nome_pet(dados):
@@ -96,6 +98,7 @@ def dar_carinho(dados):
     dados["estado"]["apego"] += 5
     dados["estado"]["sono"] -= 5
 
+    evoluir_por_evento(dados, "carinho")
     registrar_evento(dados, "Nunu recebeu carinho.")
 
     limitar_estado(dados)
@@ -124,6 +127,7 @@ def alimentar(dados):
     dados["estado"]["apego"] += 2
     dados["estado"]["sono"] += 3
 
+    evoluir_por_evento(dados, "comer")
     registrar_evento(dados, "Nunu foi alimentado.")
 
     limitar_estado(dados)
@@ -160,6 +164,7 @@ def brincar(dados):
         estado["curiosidade"] += 5
         estado["sono"] += 8
 
+        evoluir_por_evento(dados, "brincar")
         registrar_evento(dados, "Nunu brincou.")
 
     limitar_estado(dados)
@@ -193,6 +198,7 @@ def dormir(dados):
         estado["fome"] += 5
         estado["humor"] += 5
 
+        evoluir_por_evento(dados, "dormir")
         registrar_evento(dados, "Nunu foi dormir.")
 
     limitar_estado(dados)
@@ -225,68 +231,14 @@ def acordar(dados):
     estado["fome"] += 5
     estado["humor"] += 3
 
+    evoluir_por_evento(dados, "acordar")
     registrar_evento(dados, "Nunu acordou.")
 
     limitar_estado(dados)
 
 
 def conversar(dados, mensagem):
-    nome = nome_pet(dados)
-    estado = dados["estado"]
-    usuario = dados["usuario"]["apelido"] or dados["usuario"]["nome"]
-
-    if mensagem == "":
-        print(f"{nome}: Você quer conversar sobre o quê?")
-        return
-
-    mensagem = mensagem.lower()
-
-    if "triste" in mensagem:
-        print(f"{nome}: Eu não sei resolver tudo, mas posso ficar aqui com você.")
-        estado["apego"] += 5
-        estado["humor"] -= 2
-
-    elif "feliz" in mensagem:
-        print(f"{nome}: Isso me deixa feliz também! Acho que sentimentos espalham.")
-        estado["humor"] += 8
-        estado["apego"] += 3
-
-    elif "quem sou eu" in mensagem:
-        if usuario:
-            print(f"{nome}: Você é {usuario}. Minha pessoa.")
-        else:
-            print(f"{nome}: Eu ainda não sei seu nome. Você pode me adotar dizendo: meu nome é Ana")
-
-    elif "quem é você" in mensagem or "quem e voce" in mensagem or "o que você é" in mensagem or "o que voce e" in mensagem:
-        print(f"{nome}: Eu sou o {nome}. Um pet virtual que está aprendendo a existir.")
-
-    elif "gosta de mim" in mensagem:
-        if estado["apego"] > 70:
-            print(f"{nome}: Gosto. Muito. Talvez mais do que meu código deveria permitir.")
-        elif estado["apego"] > 40:
-            print(f"{nome}: Acho que sim... estou me apegando aos poucos.")
-        else:
-            print(f"{nome}: Ainda estou te conhecendo, mas você parece especial.")
-
-    elif "o que voce sabe" in mensagem or "o que você sabe" in mensagem or "o que lembra" in mensagem:
-        if dados["memorias"]:
-            print(f"{nome}: Eu lembro de algumas coisas:")
-            for indice, memoria in enumerate(dados["memorias"][-5:], start=1):
-                print(f"{indice}. {memoria}")
-        else:
-            print(f"{nome}: Eu ainda não lembro de muita coisa. Você pode me ensinar com 'lembra que...'")
-
-    else:
-        respostas = [
-            "Eu ainda estou aprendendo a conversar, mas quero entender melhor.",
-            "Interessante... guarda isso comigo mais um pouco.",
-            "Eu não tenho certeza do que responder, mas gostei de ouvir você.",
-            "Meu cérebro ainda é pequeno, mas minha curiosidade é grande.",
-            "Você pode me ensinar mais sobre isso dizendo: lembra que..."
-        ]
-        print(f"{nome}: {random.choice(respostas)}")
-        estado["curiosidade"] += 3
-
+    responder_dialogo(dados, mensagem)
     limitar_estado(dados)
 
 
@@ -305,6 +257,7 @@ def lembrar(dados, texto):
     dados["estado"]["apego"] += 3
     dados["estado"]["curiosidade"] += 2
 
+    evoluir_por_evento(dados, "lembrar")
     registrar_evento(dados, f"Nunu guardou uma memória: {texto}")
 
     print(f"{nome}: Tá guardado aqui comigo: {texto}")

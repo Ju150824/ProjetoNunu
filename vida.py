@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from personalidade import evoluir_por_evento
+
 
 FORMATO_DATA = "%Y-%m-%d %H:%M:%S"
 
@@ -115,14 +117,17 @@ def aplicar_ausencia(dados):
 
     if minutos >= 60:
         estado["humor"] -= 4
+        evoluir_por_evento(dados, "ausencia")
 
     if minutos >= 360:
         estado["humor"] -= 8
         estado["apego"] += 3
+        evoluir_por_evento(dados, "ausencia")
 
     if minutos >= 1440:
         estado["humor"] -= 12
         estado["apego"] += 5
+        evoluir_por_evento(dados, "muita_ausencia")
 
     limitar_estado(dados)
 

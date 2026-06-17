@@ -29,6 +29,11 @@ from vida import (
     registrar_interacao
 )
 
+from personalidade import (
+    mostrar_personalidade,
+    mostrar_perfil
+)
+
 
 def mostrar_ajuda():
     print("\n--- Comandos e frases que o Nunu entende ---")
@@ -38,6 +43,8 @@ def mostrar_ajuda():
     print("status")
     print("como você está?")
     print("observar")
+    print("personalidade")
+    print("perfil")
     print("carinho")
     print("quero fazer carinho em você")
     print("comer")
@@ -65,7 +72,9 @@ def pode_interagir_dormindo(intencao):
         "humor",
         "observar",
         "acordar",
-        "historico"
+        "historico",
+        "personalidade",
+        "perfil"
     ]
 
 
@@ -117,6 +126,12 @@ while True:
 
     elif intencao == "observar":
         observar(dados)
+
+    elif intencao == "personalidade":
+        mostrar_personalidade(dados)
+
+    elif intencao == "perfil":
+        mostrar_perfil(dados)
 
     elif intencao == "carinho":
         dar_carinho(dados)

@@ -120,7 +120,6 @@ py main.py
 Objetivo futuro
 
 O objetivo é evoluir o Nunu em fases:
-
 Pet virtual no terminal
 Interface gráfica para desktop
 Aplicativo mobile
